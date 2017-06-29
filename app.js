@@ -21,8 +21,9 @@ fs.readFile('5.png', function (err, data) {
 			ACL: 'public-read'
 		},function (err, data,i) {
 			console.log(arguments);
-				if (err) {
-					return alert('There was an error uploading your photo:', err.message);
+			if (err) {
+				console.log (err)
+				//return alert('There was an error uploading your photo:', err.message);
 			}
 			console.log(`Successfully uploaded package - ${i}`);
 		});

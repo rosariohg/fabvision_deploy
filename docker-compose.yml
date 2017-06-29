@@ -1,0 +1,9 @@
+version: "2"
+services:
+  fabvision:
+    image: rosariohg/fabvision:0.1
+    command: node app.js
+    #ports:
+    # - "5000:5000"
+    #volumes:
+    #- .:/code
