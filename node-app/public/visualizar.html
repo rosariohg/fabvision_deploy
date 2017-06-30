@@ -36,9 +36,9 @@
             <div class="col-md-2">
             </div>
             <div class="col-md-8">
-                <img id="play">
+                <img id="play" style="display:block; margin:0 auto;"/>
                 <div id="logger"></div>
-                <div id="resp"></div>
+                <div id="resp" style="text-align: center;"></div>
                 <script>
                 var socket = io();
                 socket.on('stream', function(image) {
@@ -48,8 +48,15 @@
                 });
                 socket.on('results', function(resp) {
                     console.log (resp);
-                    //var html = `Golpe: ${resp.} <br>`;
-                    //$('#logger').text(resp);
+                    var res = resp.res;
+                    var html = '';
+                    if (res['golpe'] > res['no golpe']) {
+                        html = `Golpe: <span style='color:red'>${res['golpe']}</span> <br> No Golpe: ${res['no golpe']} <br> Imagen: ${resp.id}`;
+                    } else {
+                        html = `Golpe: ${res['golpe']} <br> No Golpe: <span style='color:red'>${res['no golpe']}</span> <br> Imagen: ${resp.id}`;
+                    }
+                    
+                    $('#resp').html(html);
                 });
                 </script>
             </div>

@@ -14,7 +14,7 @@ var io = socketio(http_server);
 log = new Log('debug');
 var port = 4000;
 var cont = 0;
-var TF_HOST = 'http://192.168.99.100:5000';
+var TF_HOST = 'http://fabvision-tf:5000';
 
 AWS.config.update({
 	accessKeyId: 'AKIAIRP7IULKHTN36RKQ',
@@ -61,7 +61,13 @@ function send_to_tf(url, key, callback) {
 	    });
 
 	    res.on('end', function(){
-	        var jsonresponse = JSON.parse(body);
+	    	var jsonresponse = ''
+	    	try {
+			    jsonresponse = JSON.parse(body);
+		  	} catch (e) {
+			    console.error('Error en TF: ',e);
+			    return;
+			}
 	        if (jsonresponse.error == '')
 	        	callback(jsonresponse);
 	        else
@@ -87,7 +93,7 @@ io.on('connection',function(socket){
 			console.log(`Successfully uploaded image - ${cont}.jpg`);
 			send_to_tf(resp_s3.Location, resp_s3.key, function(resp_tf){
 				console.log(resp_tf);
-				//socket.emit('results',resp_tf);
+				io.emit('results',resp_tf);
 			});
 		});
 		
