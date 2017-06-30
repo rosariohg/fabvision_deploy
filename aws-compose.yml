@@ -1,6 +1,0 @@
-fabvision:
-  image: rosariohg/fabvision:0.1
-  command: node app.js
-  cpu_shares: 100
-  mem_limit: 262144000
-
