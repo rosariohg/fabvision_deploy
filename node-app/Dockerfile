@@ -12,8 +12,8 @@ ADD . /app
 WORKDIR /app
 
 # fetch app specific deps
-#RUN npm install
-RUN cp -R . /tmp/src && ls /tmp/src && cd /tmp/src && npm i
+RUN npm install
+#RUN cp -R . /tmp/src && ls /tmp/src && cd /tmp/src && npm i
 #RUN npm run build
 
 # expose port
