@@ -38,12 +38,18 @@
             <div class="col-md-8">
                 <img id="play">
                 <div id="logger"></div>
+                <div id="resp"></div>
                 <script>
                 var socket = io();
                 socket.on('stream', function(image) {
                     var img = document.getElementById("play");
                     img.src = image;
-                    $('#logger').text(image);
+                    //$('#logger').text(image);
+                });
+                socket.on('results', function(resp) {
+                    console.log (resp);
+                    //var html = `Golpe: ${resp.} <br>`;
+                    //$('#logger').text(resp);
                 });
                 </script>
             </div>

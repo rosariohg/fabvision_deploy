@@ -14,6 +14,7 @@ var io = socketio(http_server);
 log = new Log('debug');
 var port = 4000;
 var cont = 0;
+var TF_HOST = 'http://192.168.99.100:5000';
 
 AWS.config.update({
 	accessKeyId: 'AKIAIRP7IULKHTN36RKQ',
@@ -39,18 +40,36 @@ function send_to_s3(image_buffer, name, callback) {
 		Body: base64data,
 		ACL: 'public-read'
 	},function (err, data) {
-		console.log(arguments);
+		//console.log(arguments);
 		if (err)
 			console.log ('There was an error uploading your photo:', err.message)
 		else{
-			callback();
-			//console.log(`Successfully uploaded package - ${name}`);
+			callback(data);
 		}
 	});
 }
 
 function send_to_tf(url, key, callback) {
+	var url = TF_HOST+'?id='+encodeURIComponent(key)+
+						'&image='+encodeURIComponent(url);
 
+	http.get(url, function(res){
+	    var body = '';
+
+	    res.on('data', function(chunk){
+	        body += chunk;
+	    });
+
+	    res.on('end', function(){
+	        var jsonresponse = JSON.parse(body);
+	        if (jsonresponse.error == '')
+	        	callback(jsonresponse);
+	        else
+	        	console.log("Error en TF: ", e);
+	    });
+	}).on('error', function(e){
+	      console.log("Got an error requiring TF: ", e);
+	});
 }
 
 io.on('connection',function(socket){
@@ -63,8 +82,13 @@ io.on('connection',function(socket){
 		var buf = new Buffer(item_image, 'base64');
 
 		// send image to aws
-		send_to_s3(buf, `${cont}.jpg`, function(resp){
-			send_to_tf(resp.Location, resp.key)
+		send_to_s3(buf, `${cont}.jpg`, function(resp_s3){
+
+			console.log(`Successfully uploaded image - ${cont}.jpg`);
+			send_to_tf(resp_s3.Location, resp_s3.key, function(resp_tf){
+				console.log(resp_tf);
+				//socket.emit('results',resp_tf);
+			});
 		});
 		
 		cont +=1;
