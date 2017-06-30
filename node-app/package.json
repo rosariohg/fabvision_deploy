@@ -1,6 +1,10 @@
 {
-    "dependencies": {
-        "aws-sdk": ">= 2.0.9",
-        "node-uuid": ">= 1.4.1"
-    }
+  "dependencies": {
+    "aws-sdk": ">= 2.0.9",
+    "express": "^4.15.3",
+    "http": "0.0.0",
+    "log": "^1.4.0",
+    "node-uuid": ">= 1.4.1",
+    "socket.io": "^2.0.3"
+  }
 }
