@@ -1,6 +1,15 @@
-fabvision:
-  image: rosariohg/fabvision:0.1
-  command: node app.js
+fabvision-tf:
+  image: rosariohg/fabvision-tf
+  ports:
+   - "5000:5000"
   cpu_shares: 100
   mem_limit: 262144000
 
+fabvision-app:
+  image: rosariohg/fabvision-app
+  ports:
+   - "80:4000"
+  cpu_shares: 100
+  mem_limit: 262144000
+  links:
+   - fabvision-tf
