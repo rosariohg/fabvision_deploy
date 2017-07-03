@@ -17,8 +17,8 @@ var cont = 0;
 var TF_HOST = 'http://fabvision-tf:5000';
 
 AWS.config.update({
-	accessKeyId: 'AKIAIE6YMTLYBULBVALQ',
-	secretAccessKey: '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'
+	accessKeyId: 'AKIAJD3GMWWWJYVQWBCA',
+	secretAccessKey: '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'
 });
 
 app.use(express.static(__dirname + "/public"));
@@ -35,7 +35,7 @@ function send_to_s3(image_buffer, name, callback) {
 	var base64data = new Buffer(image_buffer, 'binary');
 	var s3 = new AWS.S3();
 	s3.upload({
-		Bucket: 'fabvisionimages',
+		Bucket: 'fabvisionimagen',
 		Key: `${name}`,
 		Body: base64data,
 		ACL: 'public-read'
