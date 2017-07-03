@@ -17,8 +17,8 @@ var cont = 0;
 var TF_HOST = 'http://fabvision-tf:5000';
 
 AWS.config.update({
-	accessKeyId: 'AKIAJQ4KZH3OQEDTV26A',
-	secretAccessKey: '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'
+	accessKeyId: 'AKIAJL4HQAS3XRNM2RZA',
+	secretAccessKey: '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'
 });
 
 app.use(express.static(__dirname + "/public"));
